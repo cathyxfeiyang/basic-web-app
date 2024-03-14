@@ -36,7 +36,7 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
-  if (query.toLowerCase().includes("multiplied by")) {
+  if (query.toLowerCase().includes("multiplied")) {
     // Attempt to extract numbers around the phrase "multiplied by"
     const parts = query.match(/(\d+)\s+multiplied by\s+(\d+)/i);
     if (parts && parts.length === 3) { // Ensure the match was successful and the correct parts were found
