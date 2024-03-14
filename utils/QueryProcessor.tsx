@@ -36,6 +36,16 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("multiplied by")) {
+    // Attempt to extract numbers around the phrase "multiplied by"
+    const parts = query.match(/(\d+)\s+multiplied by\s+(\d+)/i);
+    if (parts && parts.length === 3) { // Ensure the match was successful and the correct parts were found
+      const num1 = parseInt(parts[1], 10); // First number involved in multiplication
+      const num2 = parseInt(parts[2], 10); // Second number involved in multiplication
+      return (num1 * num2).toString(); // Perform the multiplication and return the result as a string
+    }
+  }
+
   if (query.startsWith("Which of the following numbers is both a square and a cube:")) {
     // Extract the numbers from the query
     const numbersInQuery = query.match(/\d+/g); // This matches any sequence of digits
