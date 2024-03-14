@@ -36,17 +36,21 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
-  if (query.toLowerCase().includes("square") && query.toLowerCase().includes("cube")) {
-    const matches = query.match(/\d+/g); // Find all numbers in the query
-    if (matches) {
-      const numbers = matches.map(Number); // Convert all found strings to numbers
-      const perfectSixthPowers = numbers.filter(number => {
+  if (query.startsWith("Which of the following numbers is both a square and a cube:")) {
+    // Extract the numbers from the query
+    const numbersInQuery = query.match(/\d+/g); // This matches any sequence of digits
+    if (numbersInQuery) {
+      const numbers = numbersInQuery.map(Number); // Convert found strings to numbers
+      const validNumbers = numbers.filter(number => {
+        // Calculate the sixth root and check if it's an integer by comparing it to its floor value
         const sixthRoot = Math.pow(number, 1/6);
-        return sixthRoot === Math.floor(sixthRoot); // Check if the sixth root is an integer
+        return sixthRoot === Math.floor(sixthRoot);
       });
-      if (perfectSixthPowers.length > 0) {
-        return perfectSixthPowers.join(", "); // Return the numbers that are both squares and cubes
-      }
+
+      // Prepare the response
+      return validNumbers.length > 0
+        ? `The number(s) that is both a square and a cube: ${validNumbers.join(", ")}`
+        : "None of the provided numbers are both a square and a cube.";
     }
   }
 
