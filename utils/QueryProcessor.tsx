@@ -48,18 +48,20 @@ export default function QueryProcessor(query: string): string {
 
   if (query.startsWith("Which of the following numbers is both a square and a cube:")) {
     // Extract the numbers from the query
-    const numbersInQuery = query.match(/\d+/g); // This matches any sequence of digits
+    const numbersInQuery = query.match(/\d+/g); // This regex matches any sequence of digits in the query
     if (numbersInQuery) {
-      const numbers = numbersInQuery.map(Number); // Convert found strings to numbers
+      const numbers = numbersInQuery.map(Number); // Convert the matched strings to numbers
+      // Filter numbers to find those that are both perfect squares and cubes
       const validNumbers = numbers.filter(number => {
-        // Calculate the sixth root and check if it's an integer by comparing it to its floor value
-        const sixthRoot = Math.pow(number, 1/6);
-        return sixthRoot === Math.floor(sixthRoot);
+        const squareRoot = Math.sqrt(number);
+        const cubeRoot = Math.cbrt(number);
+        // Check if both the square root and cube root are integers
+        return squareRoot === Math.floor(squareRoot) && cubeRoot === Math.floor(cubeRoot);
       });
 
-      // Prepare the response
+      // Format the response with the found numbers, or indicate none were found
       return validNumbers.length > 0
-        ? `The number(s) that is both a square and a cube: ${validNumbers.join(", ")}`
+        ? `Numbers that are both a square and a cube: ${validNumbers.join(", ")}`
         : "None of the provided numbers are both a square and a cube.";
     }
   }
