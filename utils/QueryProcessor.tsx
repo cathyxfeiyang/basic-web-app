@@ -63,6 +63,24 @@ export default function QueryProcessor(query: string): string {
       return `${validNumbers.join(", ")}`;
     }
   }
+  if (query.startsWith("Which of the following numbers are primes")) {
+    const numbersInQuery = query.match(/\d+/g);
+    if (numbersInQuery) {
+      const numbers = numbersInQuery.map(Number); // Convert to numbers
+      // Filter for prime numbers
+      const primeNumbers = numbers.filter(number => {
+        if (number <= 1) return false; // 0 and 1 are not prime
+        // Check for divisors from 2 to number-1
+        for (let i = 2; i < number; i++) {
+          if (number % i === 0) return false; // Found a divisor, not prime
+        }
+        return true; // No divisors found, is prime
+      });
+
+      // Format the response with the found prime numbers, or indicate none were found
+      return `${primeNumbers.join(", ")}`;
+    }
+  }
 
   return "";
 }
