@@ -16,6 +16,11 @@ export default function QueryProcessor(query: string): string {
       "feiyangx2"
     );
   }
+  if (query.toLowerCase().includes("largest")) {
+    return (
+      "40"
+    );
+  }
 
   return "";
 }
