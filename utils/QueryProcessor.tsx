@@ -36,5 +36,19 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("square") && query.toLowerCase().includes("cube")) {
+    const matches = query.match(/\d+/g); // Find all numbers in the query
+    if (matches) {
+      const numbers = matches.map(Number); // Convert all found strings to numbers
+      const perfectSixthPowers = numbers.filter(number => {
+        const sixthRoot = Math.pow(number, 1/6);
+        return sixthRoot === Math.floor(sixthRoot); // Check if the sixth root is an integer
+      });
+      if (perfectSixthPowers.length > 0) {
+        return perfectSixthPowers.join(", "); // Return the numbers that are both squares and cubes
+      }
+    }
+  }
+
   return "";
 }
