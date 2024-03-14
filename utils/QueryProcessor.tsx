@@ -60,9 +60,7 @@ export default function QueryProcessor(query: string): string {
       });
 
       // Format the response with the found numbers, or indicate none were found
-      return validNumbers.length > 0
-        ? `Numbers that are both a square and a cube: ${validNumbers.join(", ")}`
-        : "None of the provided numbers are both a square and a cube.";
+      return `${validNumbers.join(", ")}`;
     }
   }
 
