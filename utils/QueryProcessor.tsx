@@ -11,6 +11,11 @@ export default function QueryProcessor(query: string): string {
       "feiyangx is the Andrew ID of the author of this page. "
     );
   }
+  if (query.toLowerCase().includes("name")) {
+    return (
+      "Cathy Xu"
+    );
+  }
 
   return "";
 }
